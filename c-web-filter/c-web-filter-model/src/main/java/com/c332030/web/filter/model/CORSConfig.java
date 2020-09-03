@@ -13,33 +13,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-// @ConfigurationProperties(prefix = "filter.cors")
 public class CORSConfig {
-
-    /**
-     * 空配置
-     */
-    public static final CORSConfig EMPTY = new CORSConfig() {
-        @Override
-        public void setOrigins(List<String> origins) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setMethods(String methods) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setHeaders(String headers) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setCredentials(Boolean credentials) {
-            throw new UnsupportedOperationException();
-        }
-    };
 
     /**
      * origin 请求源
