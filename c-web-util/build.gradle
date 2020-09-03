@@ -3,6 +3,6 @@ dependencies {
 
   api group: 'com.c332030.commons', name: 'c-commons-util', version: versions.c_commons_java
 
-  api project(':c-web-smodel')
+  api project(':c-web-model')
 
 }
