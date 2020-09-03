@@ -72,6 +72,9 @@ subprojects {
 
     dependencies {
 
+        compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+        testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+
         testImplementation group: 'junit', name: 'junit', version: versions.junit
 
         // lombok
@@ -81,16 +84,12 @@ subprojects {
         testCompileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
         testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
 
-        // api group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: versions.mybatis_starter
-        // api group: 'tk.mybatis', name: 'mapper-spring-boot-starter' , version: versions.mapper_starter
-        // api group: 'tk.mybatis', name: 'mapper', version: versions.mybatis
-
     }
 
     // 实时更新 snapshots
     configurations.all {
-        resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
-        resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 
     // 测试配置
@@ -99,5 +98,4 @@ subprojects {
 
         exclude '**/*Test*.class'
     }
-
 }

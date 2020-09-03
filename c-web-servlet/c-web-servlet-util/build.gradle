@@ -2,4 +2,7 @@
 dependencies {
 
   api project(':c-web-util')
+
+  api project(':c-web-servlet:c-web-servlet-model')
+
 }

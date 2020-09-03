@@ -1,0 +1,8 @@
+
+dependencies {
+
+  api project(':c-web-util')
+
+  api project(':c-web-filter:c-web-filter-model')
+
+}

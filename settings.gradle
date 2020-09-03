@@ -16,5 +16,11 @@ include 'c-web-model'
 
 include 'c-web-util'
 
+include 'c-web-filter'
+include 'c-web-filter:c-web-filter-model'
+include 'c-web-filter:c-web-filter-provider'
+
 include 'c-web-servlet'
+include 'c-web-servlet:c-web-servlet-model'
 include 'c-web-servlet:c-web-servlet-util'
+include 'c-web-servlet:c-web-servlet-provider'
