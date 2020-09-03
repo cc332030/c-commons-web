@@ -1,0 +1,103 @@
+
+def ext = rootProject.ext
+def versions = ext.versions
+
+buildscript {
+
+    apply from: 'config.gradle'
+
+    repositories {
+        maven {
+            url 'https://nexus.local.c332030.com/repository/maven-public/'
+        }
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+
+    group = rootProject.ext.group
+    version = rootProject.ext.version
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = rootProject.ext.charset
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    jar {
+        enabled = true
+
+        into("META-INF/maven/$project.group/$project.name") {
+            from { generatePomFileForMavenPublication }
+            rename ".*", "pom.xml"
+        }
+    }
+
+    repositories {
+        maven {
+            url 'https://nexus.local.c332030.com/repository/maven-public/'
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+              def releasesRepoUrl = "https://nexus.local.c332030.com/repository/maven-releases/"
+              def snapshotsRepoUrl = "https://nexus.local.c332030.com/repository/maven-snapshots/"
+              url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+              credentials {
+                username 'admin'
+                password '123456'
+              }
+            }
+        }
+    }
+
+    dependencies {
+
+        testImplementation group: 'junit', name: 'junit', version: versions.junit
+
+        // lombok
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+        testCompileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+        testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+        // api group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: versions.mybatis_starter
+        // api group: 'tk.mybatis', name: 'mapper-spring-boot-starter' , version: versions.mapper_starter
+        // api group: 'tk.mybatis', name: 'mapper', version: versions.mybatis
+
+    }
+
+    // 实时更新 snapshots
+    configurations.all {
+        resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+        resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+    }
+
+    // 测试配置
+    test {
+        // include '**/Test*.class'
+
+        exclude '**/*Test*.class'
+    }
+
+}

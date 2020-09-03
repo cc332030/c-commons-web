@@ -1,0 +1,19 @@
+
+ext {
+
+  group = 'com.c332030.web'
+  version = '0.0.1-SNAPSHOT'
+
+  charset = 'utf-8'
+
+  versions = [
+
+    c_commons_java: '0.0.1-SNAPSHOT'
+
+    , junit: '4.13'
+    , lombok: '1.18.12'
+
+    , servlet: '4.0.1'
+
+  ]
+}

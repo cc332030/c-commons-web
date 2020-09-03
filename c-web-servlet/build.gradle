@@ -1,0 +1,11 @@
+
+subprojects {
+
+  dependencies {
+
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+
+  }
+
+}
