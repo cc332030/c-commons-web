@@ -1,5 +1,6 @@
 package com.c332030.web.util;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
@@ -128,7 +129,7 @@ public abstract class HttpUtils {
      * @author c332030
      */
     public static String urlDecode(String str){
-        return URLEncoder.encode(str, StandardCharsets.UTF_8);
+        return URLDecoder.decode(str, StandardCharsets.UTF_8);
     }
 
 }
