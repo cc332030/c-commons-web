@@ -4,6 +4,7 @@ import java.net.URLConnection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 
@@ -68,4 +69,27 @@ public abstract class ServletUtils {
         }
     }
 
+    /**
+     * <p>
+     * Description: 设置请求头
+     * </p>
+     *
+     * @param connection 连接
+     * @param response 响应
+     * @param httpHeaders 请求头集合
+     * @author c332030
+     */
+    public static void setHeader(
+        URLConnection connection,
+        HttpServletResponse response,
+        String... httpHeaders
+    ) {
+        if(ArrayUtils.isEmpty(httpHeaders)) {
+            return;
+        }
+
+        for(String str: httpHeaders) {
+            response.setHeader(str, connection.getHeaderField(str));
+        }
+    }
 }
