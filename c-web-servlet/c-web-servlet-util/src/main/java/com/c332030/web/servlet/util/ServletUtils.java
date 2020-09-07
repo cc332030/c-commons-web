@@ -3,6 +3,8 @@ package com.c332030.web.servlet.util;
 import java.net.URLConnection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +29,7 @@ public abstract class ServletUtils {
      * @param request HttpServletRequest
      * @return 网站路径
      */
-    public static String getWebRoot(HttpServletRequest request) {
+    public static String getWebRoot(@Nonnull HttpServletRequest request) {
 
         StringBuilder ab = new StringBuilder(request.getScheme());
 
@@ -56,9 +58,9 @@ public abstract class ServletUtils {
      * @author c332030
      */
     public static void setHeader(
-        HttpServletRequest request,
-        URLConnection connection,
-        String... httpHeaders
+        @Nonnull HttpServletRequest request,
+        @Nonnull URLConnection connection,
+        @Nonnull String... httpHeaders
     ) {
         if(ArrayUtils.isEmpty(httpHeaders)) {
             return;
@@ -80,9 +82,9 @@ public abstract class ServletUtils {
      * @author c332030
      */
     public static void setHeader(
-        URLConnection connection,
-        HttpServletResponse response,
-        String... httpHeaders
+        @Nonnull URLConnection connection,
+        @Nonnull HttpServletResponse response,
+        @Nonnull String... httpHeaders
     ) {
         if(ArrayUtils.isEmpty(httpHeaders)) {
             return;
