@@ -1,10 +1,13 @@
 package com.c332030.web.servlet.util;
 
+import java.net.URLConnection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.ImmutableList;
+
+import com.c332030.util.collection.ArrayUtils;
 
 /**
  * <p>
@@ -40,4 +43,29 @@ public abstract class ServletUtils {
 
         return ab.toString();
     }
+
+    /**
+     * <p>
+     * Description: 设置请求头
+     * </p>
+     *
+     * @param request 请求
+     * @param connection 连接
+     * @param httpHeaders 请求头集合
+     * @author c332030
+     */
+    public static void setHeader(
+        HttpServletRequest request,
+        URLConnection connection,
+        String... httpHeaders
+    ) {
+        if(ArrayUtils.isEmpty(httpHeaders)) {
+            return;
+        }
+
+        for(String str: httpHeaders) {
+            connection.setRequestProperty(str, request.getHeader(str));
+        }
+    }
+
 }
