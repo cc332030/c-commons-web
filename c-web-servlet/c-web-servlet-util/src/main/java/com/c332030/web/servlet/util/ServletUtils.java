@@ -125,7 +125,7 @@ public abstract class ServletUtils {
         @Nonnull String httpHeaderName,
         String defaultValue
     ) {
-        String value = request.getHeader(defaultValue);
+        String value = request.getHeader(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
             value = defaultValue;
         }
@@ -212,7 +212,7 @@ public abstract class ServletUtils {
         @Nonnull String httpHeaderName,
         String defaultValue
     ) {
-        String value = connection.getHeaderField(defaultValue);
+        String value = connection.getHeaderField(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
             value = defaultValue;
         }
