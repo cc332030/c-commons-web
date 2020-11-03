@@ -1,13 +1,15 @@
 package com.c332030.web.servlet.util;
 
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.ImmutableList;
 
@@ -62,8 +64,8 @@ public abstract class ServletUtils {
         @Nonnull HttpServletRequest request,
         @Nonnull URLConnection connection
     ) {
-        request.getHeaderNames().asIterator().forEachRemaining((String headerName) ->
-            setHeader(request, connection, headerName));
+        request.getHeaderNames().asIterator()
+            .forEachRemaining((headerName) -> setHeader(request, connection, headerName));
     }
 
     /**
@@ -85,9 +87,8 @@ public abstract class ServletUtils {
             return;
         }
 
-        for(String str: httpHeaders) {
-            setHeader(request, connection, str);
-        }
+        Arrays.stream(httpHeaders)
+            .forEach(httpHeader -> setHeader(request, connection, httpHeader));
     }
 
     /**
@@ -125,8 +126,16 @@ public abstract class ServletUtils {
         @Nonnull String httpHeaderName,
         String defaultValue
     ) {
+
+        if(StringUtils.isEmpty(httpHeaderName)) {
+            return;
+        }
+
         String value = request.getHeader(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
+            if(StringUtils.isEmpty(defaultValue)) {
+                return;
+            }
             value = defaultValue;
         }
         connection.setRequestProperty(httpHeaderName, value);
@@ -146,10 +155,13 @@ public abstract class ServletUtils {
         @Nonnull URLConnection connection,
         @Nonnull HttpServletResponse response
     ) {
-        Map<String, List<String>> map = connection.getHeaderFields();
-        for(Map.Entry<String, List<String>> entry: map.entrySet()) {
-            response.setHeader(entry.getKey(), StringUtils.join(entry.getValue(), ';'));
-        }
+        connection.getHeaderFields()
+            .forEach((key, value) -> {
+                if(StringUtils.isEmpty(key) || CollectionUtils.isEmpty(value)) {
+                    return;
+                }
+                response.setHeader(key, StringUtils.join(value, ';'));
+            });
     }
 
     /**
@@ -171,9 +183,17 @@ public abstract class ServletUtils {
             return;
         }
 
-        for(String str: httpHeaders) {
-            response.setHeader(str, connection.getHeaderField(str));
-        }
+        Arrays.stream(httpHeaders).forEach(httpHeader -> {
+            if(StringUtils.isEmpty(httpHeader)) {
+                return;
+            }
+            String value = connection.getHeaderField(httpHeader);
+            if(StringUtils.isEmpty(value)) {
+                return;
+            }
+
+            response.setHeader(httpHeader, value);
+        });
     }
 
 
@@ -212,8 +232,14 @@ public abstract class ServletUtils {
         @Nonnull String httpHeaderName,
         String defaultValue
     ) {
+        if(StringUtils.isEmpty(httpHeaderName)) {
+            return;
+        }
         String value = connection.getHeaderField(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
+            if(StringUtils.isEmpty(defaultValue)) {
+                return;
+            }
             value = defaultValue;
         }
         response.setHeader(httpHeaderName, value);
