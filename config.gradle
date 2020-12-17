@@ -10,10 +10,18 @@ ext {
 
     c_commons_java: '0.0.1-SNAPSHOT'
 
+    , servlet: '4.0.1'
+
+    , logback: '1.2.3'
+
     , junit: '4.13'
+
     , lombok: '1.18.12'
 
-    , servlet: '4.0.1'
+    , apache_commons_lang3: '3.9'
+    , apache_commons_collections: '4.4'
+
+    , google_guava: '29.0-jre'
 
   ]
 }

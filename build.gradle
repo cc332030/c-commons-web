@@ -75,6 +75,25 @@ subprojects {
         compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
         testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
 
+        // logback
+        compileOnly group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
+        testCompileOnly group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
+
+        compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
+        testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
+
+        // commons-lang3
+        compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: versions.apache_commons_lang3
+        testCompileOnly group: 'org.apache.commons', name: 'commons-lang3', version: versions.apache_commons_lang3
+
+        // commons-collections4
+        compileOnly group: 'org.apache.commons', name: 'commons-collections4', version: versions.apache_commons_collections
+        testCompileOnly group: 'org.apache.commons', name: 'commons-collections4', version: versions.apache_commons_collections
+
+        // guava
+        compileOnly group: 'com.google.guava', name: 'guava', version: versions.google_guava
+        testCompileOnly group: 'com.google.guava', name: 'guava', version: versions.google_guava
+
         testImplementation group: 'junit', name: 'junit', version: versions.junit
 
         // lombok
