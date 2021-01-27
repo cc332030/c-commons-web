@@ -11,7 +11,7 @@ import org.apache.commons.collections4.MapUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.c332030.util.asserts.Assert;
+import com.c332030.util.asserts.CAssert;
 
 /**
  * <p>
@@ -40,7 +40,8 @@ public abstract class HttpUtils {
      * @author c332030
      */
     public static String getUrlWithTimestamp(String url) {
-        Assert.notNull(url);
+
+        CAssert.notNull(url);
 
         long mills = System.currentTimeMillis();
 
