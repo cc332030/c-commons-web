@@ -1,6 +1,6 @@
 package com.c332030.web.filter.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class CORSConfig {
     /**
      * origin 请求源
      */
-    private List<String> origins;
+    private Collection<String> origins;
 
     /**
      * origin 请求方式
@@ -34,4 +34,5 @@ public class CORSConfig {
      * origin cookies 支持
      */
     private Boolean credentials;
+
 }

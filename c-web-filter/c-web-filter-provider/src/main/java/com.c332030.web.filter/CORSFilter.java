@@ -2,7 +2,6 @@ package com.c332030.web.filter;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import com.c332030.web.filter.model.CORSConfig;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -80,7 +78,7 @@ public class CORSFilter extends BaseFilter {
 
         log.debug("corsConfig: {}", corsConfig);
 
-        List<String> origins = corsConfig.getOrigins();
+        Collection<String> origins = corsConfig.getOrigins();
 
         // origin
         final String origin = request.getHeader("Origin");
