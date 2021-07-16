@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>
  * Description: Cookies
@@ -13,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author c332030
  * @version 1.0
  */
-public abstract class CookieUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class CCookieUtils {
 
     /**
      * <p>
@@ -27,8 +31,8 @@ public abstract class CookieUtils {
      */
     public static Cookie getCookie(@Nonnull HttpServletRequest request, @Nonnull String key) {
 
-        Cookie[] cookies = request.getCookies();
-        for(Cookie cookie: cookies) {
+        var cookies = request.getCookies();
+        for(var cookie: cookies) {
             if(key.equals(cookie.getName())) {
                 return cookie;
             }
@@ -48,7 +52,7 @@ public abstract class CookieUtils {
      * @author c332030
      */
     public static String getCookieValue(@Nonnull HttpServletRequest request, @Nonnull String key) {
-        Cookie cookie = getCookie(request, key);
+        var cookie = getCookie(request, key);
         return null == cookie ? null : cookie.getValue();
     }
 
