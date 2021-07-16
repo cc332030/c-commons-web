@@ -3,15 +3,14 @@ package com.c332030.web.util;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.collections4.MapUtils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import com.c332030.util.asserts.CAssert;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -22,7 +21,8 @@ import com.c332030.util.asserts.CAssert;
  * @version 1.0
  */
 @Slf4j
-public abstract class HttpUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class CHttpUtils {
 
     public static final String MARK_QUESTION = "?";
 
@@ -43,7 +43,7 @@ public abstract class HttpUtils {
 
         CAssert.notNull(url);
 
-        long mills = System.currentTimeMillis();
+        var mills = System.currentTimeMillis();
 
         if(url.contains(MARK_QUESTION)) {
             return url + MARK_AND + mills + MARK_EQUALS;
@@ -83,13 +83,13 @@ public abstract class HttpUtils {
             return url;
         }
 
-        Set<Map.Entry<String, String>> entrySet = params.entrySet();
+        var entrySet = params.entrySet();
 
-        Iterator<Map.Entry<String, String>> iterator =  entrySet.iterator();
+        var iterator =  entrySet.iterator();
 
-        StringBuilder urlBuilder = new StringBuilder(url);
+        var urlBuilder = new StringBuilder(url);
 
-        Map.Entry<String, String> first = iterator.next();
+        var first = iterator.next();
         urlBuilder.append(MARK_QUESTION);
         urlBuilder.append(first.getKey());
         urlBuilder.append(MARK_EQUALS);
@@ -97,7 +97,7 @@ public abstract class HttpUtils {
 
         while (iterator.hasNext()) {
 
-            Map.Entry<String, String> entry = iterator.next();
+            var entry = iterator.next();
             urlBuilder.append(MARK_AND);
             urlBuilder.append(entry.getKey());
             urlBuilder.append(MARK_EQUALS);

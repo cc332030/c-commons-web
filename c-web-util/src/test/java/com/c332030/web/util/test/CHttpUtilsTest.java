@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.c332030.web.util.HttpUtils;
+import com.c332030.web.util.CHttpUtils;
 
 /**
  * <p>
@@ -15,13 +15,13 @@ import com.c332030.web.util.HttpUtils;
  * @version 1.0
  */
 @Slf4j
-public class HttpUtilsTest {
+public class CHttpUtilsTest {
 
     @Test
     public void urlEncodeTest() {
 
-        String url = "http://work.c332030.com/PETOOLS.iso";
-        String urlEncoded = HttpUtils.urlEncode(url);
+        var url = "http://work.c332030.com/PETOOLS.iso";
+        var urlEncoded = CHttpUtils.urlEncode(url);
 
         log.info("urlEncoded: {}", urlEncoded);
     }
@@ -29,8 +29,8 @@ public class HttpUtilsTest {
     @Test
     public void urlDecodeTest() {
 
-        String urlEncoded = "http%3A%2F%2Fwork.c332030.com%2FPETOOLS.iso";
-        String urlDecoded = HttpUtils.urlDecode(urlEncoded);
+        var urlEncoded = "http%3A%2F%2Fwork.c332030.com%2FPETOOLS.iso";
+        var urlDecoded = CHttpUtils.urlDecode(urlEncoded);
 
         log.info("urlDecoded: {}", urlDecoded);
     }
