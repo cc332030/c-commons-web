@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableList;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>
  * Description: ServletUtils
@@ -23,7 +25,8 @@ import com.google.common.collect.ImmutableList;
  * @author c332030
  * @version 1.0
  */
-public abstract class ServletUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class CServletUtils {
 
     private static final List<Integer> HTTP_PORTS = ImmutableList.of(80, 443);
 
@@ -34,12 +37,12 @@ public abstract class ServletUtils {
      */
     public static String getWebRoot(@Nonnull HttpServletRequest request) {
 
-        StringBuilder ab = new StringBuilder(request.getScheme());
+        var ab = new StringBuilder(request.getScheme());
 
         ab.append("://");
         ab.append(request.getServerName());
 
-        int port = request.getServerPort();
+        var port = request.getServerPort();
         if(!HTTP_PORTS.contains(port)) {
             ab.append(":");
             ab.append(request.getServerPort());
@@ -130,7 +133,7 @@ public abstract class ServletUtils {
             return;
         }
 
-        String value = request.getHeader(httpHeaderName);
+        var value = request.getHeader(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
             if(StringUtils.isEmpty(defaultValue)) {
                 return;
@@ -186,7 +189,7 @@ public abstract class ServletUtils {
             if(StringUtils.isEmpty(httpHeader)) {
                 return;
             }
-            String value = connection.getHeaderField(httpHeader);
+            var value = connection.getHeaderField(httpHeader);
             if(StringUtils.isEmpty(value)) {
                 return;
             }
@@ -234,7 +237,7 @@ public abstract class ServletUtils {
         if(StringUtils.isEmpty(httpHeaderName)) {
             return;
         }
-        String value = connection.getHeaderField(httpHeaderName);
+        var value = connection.getHeaderField(httpHeaderName);
         if(StringUtils.isEmpty(value)) {
             if(StringUtils.isEmpty(defaultValue)) {
                 return;
