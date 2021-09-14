@@ -1,7 +1,7 @@
 
 dependencies {
 
-  api group: 'com.c332030.commons', name: 'c-commons-util', version: c_commons_java_version
+  api group: 'com.c332030', name: 'c-commons-util', version: libs.versions.c.commons.java.get()
 
   api project(':c-web-model')
 

@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 plugins {
   id 'net.researchgate.release' version '2.8.1'
 }
@@ -13,76 +11,28 @@ allprojects {
 
   dependencies {
 
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
-    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
+    compileOnly libs.servlet.api
+    testCompileOnly libs.servlet.api
 
     // logback
-    compileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
+    compileOnly libs.logback.classic
+    testCompileOnly libs.logback.classic
 
-    compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
-
-    // commons-lang3
-    compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
-    testCompileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
-
-    // commons-collections4
-    compileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
-    testCompileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
+    compileOnly libs.bundles.commons
+    testCompileOnly libs.bundles.commons
 
     // guava
-    compileOnly group: 'com.google.guava', name: 'guava', version: guava_version
-    testCompileOnly group: 'com.google.guava', name: 'guava', version: guava_version
+    compileOnly libs.guava
+    testCompileOnly libs.guava
 
-    testImplementation group: 'junit', name: 'junit', version: junit_version
+    testImplementation libs.jupiter
 
     // lombok
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
 
-    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
-    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
-
-  }
-
-  [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
-
-  test {
-    exclude '**/*Test*.class'
-  }
-
-  java {
-    withJavadocJar()
-    withSourcesJar()
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(jdk_version)
-      vendor = JvmVendorSpec.ADOPTOPENJDK
-      implementation = JvmImplementation.J9
-    }
-  }
-
-  jar {
-    enabled = true
-
-    into("META-INF/resources") {
-      from("src/main/webapp")
-    }
-  }
-
-  idea {
-    module {
-      downloadJavadoc = false
-      downloadSources = false
-    }
-  }
-
-  release {
-    git {
-      requireBranch = 'main'
-      pushToRemote = 'origin'
-      signTag = true
-    }
   }
 
 //  configurations.all {
@@ -90,88 +40,7 @@ allprojects {
 //    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
 //  }
 
-  repositories {
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-
-      maven {
-        url 'https://maven.aliyun.com/repository/public'
-      }
-      maven {
-        credentials {
-          username aliyunPackagesUsername
-          password aliyunPackagesPassword
-        }
-        url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
-      }
-      maven {
-        credentials {
-          username aliyunPackagesUsername
-          password aliyunPackagesPassword
-        }
-        url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
-      }
-    } else {
-
-      mavenCentral()
-      maven {
-        url 'https://oss.sonatype.org/content/groups/public/'
-      }
-    }
-  }
-
-  publishing {
-    publications {
-
-      mavenJava(MavenPublication) {
-
-        from components.java
-
-        pom {
-
-          name = 'c-commons-java'
-          description = 'Java commons library'
-          url = "https://github.com/cc332030/${rootProject.name}"
-          licenses {
-            license {
-              name = 'The Apache License, Version 2.0'
-              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            }
-          }
-          developers {
-            developer {
-              id = 'c332030'
-              name = 'c332030'
-              email = 'c332030@gmail.com'
-            }
-          }
-          scm {
-            connection = "scm:git:git://git@github.com:cc332030/${rootProject.name}.git"
-            developerConnection = "scm:git:ssh://git@github.com:cc332030/${rootProject.name}.git"
-            url = "https://github.com/cc332030/${rootProject.name}"
-          }
-
-        }
-      }
-
-    }
-
-    repositories {
-      maven {
-        def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-        def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-        url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-
-        credentials {
-          username ossrhUsername
-          password ossrhPassword
-        }
-      }
-    }
-
-  }
-
-  signing {
-    sign publishing.publications
-  }
+  apply from: "${rootProject.projectDir}/java.gradle"
+  apply from: "${rootProject.projectDir}/publish.gradle"
 
 }

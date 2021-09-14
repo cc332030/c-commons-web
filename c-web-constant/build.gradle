@@ -1,6 +1,6 @@
 
 dependencies {
 
-  api group: 'com.c332030.commons', name: 'c-commons-constant', version: c_commons_java_version
+  api group: 'com.c332030', name: 'c-commons-constant', version: libs.versions.c.commons.java.get()
 
 }

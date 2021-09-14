@@ -16,3 +16,54 @@ include 'c-web-servlet'
 include 'c-web-servlet:c-web-servlet-model'
 include 'c-web-servlet:c-web-servlet-util'
 include 'c-web-servlet:c-web-servlet-provider'
+
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+enableFeaturePreview('VERSION_CATALOGS')
+
+def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+
+dependencyResolutionManagement {
+
+  repositories {
+
+    mavenLocal()
+
+    if (isWindows) {
+
+      maven {
+        url "https://maven.aliyun.com/repository/public"
+      }
+      maven {
+        url repoReleaseAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+      maven {
+        url repoSnapshotAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+    } else {
+
+      mavenCentral()
+      maven {
+        url repoSnapshotSonatype
+      }
+      maven {
+        url repoReleaseSonatype
+      }
+    }
+  }
+
+  versionCatalogs {
+    libs {
+      from("com.c332030:c-commons-catalog:1.0.0-SNAPSHOT")
+    }
+  }
+}
